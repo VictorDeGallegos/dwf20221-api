@@ -28,63 +28,63 @@ public class Customer {
 	@JsonProperty("id_customer")
 	@Column(name = "id_customer")
 	private Integer id_customer;
-	
+
 	@JsonProperty("name")
 	@Column(name = "name")
-	@NotNull(message="name is required")
-	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="name can only cointain letters")
+	@NotNull(message = "name is required")
+	@Pattern(regexp = "[a-zA-ZÁÉÍÓÚáéíóúñÑ\b]*", message = "name can only cointain letters")
 	private String name;
-	
+
 	@JsonProperty("surname")
 	@Column(name = "surname")
-	@NotNull(message="surname is required")
-	@Pattern(regexp="[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]*", message="surname can only cointain letters")
+	@NotNull(message = "surname is required")
+	@Pattern(regexp = "[a-zA-ZÁÉÍÓÚáéíóúñÑ\b]*", message = "surname can only cointain letters")
 	private String surname;
-	
+
 	@JsonProperty("rfc")
 	@Column(name = "rfc")
-	@NotNull(message="rfc is required")
-	@Pattern(regexp="^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\\d]{3}))?$", message="rfc has an invalid format")
+	@NotNull(message = "rfc is required")
+	@Pattern(regexp = "^([A-ZÑ\\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\\d]{3}))?$", message = "rfc has an invalid format")
 	private String rfc;
-	
+
 	@JsonProperty("mail")
 	@Column(name = "mail")
-	@NotNull(message="mail is required")
-	@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="mail has an invalid format")
+	@NotNull(message = "mail is required")
+	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "mail has an invalid format")
 	private String mail;
-	
+
 	@JsonProperty("address")
 	@Column(name = "address")
-	@NotNull(message="address is required")
+	@NotNull(message = "address is required")
 	private String address;
-	
+
 	@JsonIgnore
 	@Column(name = "status")
-	@Min(value=0, message="status must be 0 or 1")
-	@Max(value=1, message="status must be 0 or 1")
+	@Min(value = 0, message = "status must be 0 or 1")
+	@Max(value = 1, message = "status must be 0 or 1")
 	private Integer status;
-	
-//	@JsonProperty("region")
-//	@OneToOne(cascade = CascadeType.MERGE)
-//    @JoinColumn(name = "id_region", referencedColumnName = "id_region")
-//	private Region region;
-	
+
+	// @JsonProperty("region")
+	// @OneToOne(cascade = CascadeType.MERGE)
+	// @JoinColumn(name = "id_region", referencedColumnName = "id_region")
+	// private Region region;
+
 	@JsonProperty("id_region")
 	@Column(name = "id_region")
 	private Integer id_region;
-	
+
 	@JsonProperty("image")
 	@Transient
 	private String image;
-	
+
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_customer_image", referencedColumnName = "id_customer_image")
+	@JoinColumn(name = "id_customer_image", referencedColumnName = "id_customer_image")
 	@JsonIgnore
 	private CustomerImage customerImage;
-	
+
 	public Customer() {
-		
+
 	}
 
 	public Customer(Integer id_customer,
@@ -107,8 +107,6 @@ public class Customer {
 		this.image = image;
 		this.customerImage = customerImage;
 	}
-
-
 
 	public Integer getId_customer() {
 		return id_customer;
@@ -166,13 +164,13 @@ public class Customer {
 		this.status = status;
 	}
 
-//	public Region getRegion() {
-//		return region;
-//	}
-//
-//	public void setRegion(Region region) {
-//		this.region = region;
-//	}
+	// public Region getRegion() {
+	// return region;
+	// }
+	//
+	// public void setRegion(Region region) {
+	// this.region = region;
+	// }
 
 	public String getImage() {
 		return image;
