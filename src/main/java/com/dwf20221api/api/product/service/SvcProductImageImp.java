@@ -19,7 +19,7 @@ import com.dwf20221api.exceptionHandling.ApiException;
 
 @Service
 public class SvcProductImageImp implements SvcProductImage {
-
+	
 	@Autowired
 	RepoProductImage repo;
 
@@ -36,29 +36,28 @@ public class SvcProductImageImp implements SvcProductImage {
 	@Override
 	public ApiResponse createProductImage(ProductImage productImage) {
 		try {
-			if (repo.countImages(productImage.getId_product()) >= 4) {
+			if(repo.countImages(productImage.getId_product()) >= 4) {
 				throw new ApiException(HttpStatus.BAD_REQUEST, "you have exceeded the limit of images");
 			}
-
+			
 			long timeMilli = new Date().getTime();
-			String src = "/Users/victordegallegos/Documents/GitHub/proyectosdwf/proyecto-dwf/src/assets/product_images/"; // CAMBIAR
+			String src = "C:/Users/ivan-/Documents/UNAM/FCiencias/Docencia/2022-1/Seminario A  - Frontend/GUI/dwfmarket/src/assets/product_images/"; //CAMBIAR
 			String file = productImage.getId_product() + "/img_" + timeMilli + ".bmp";
-
+			
 			File directorio = new File(src + "/" + productImage.getId_product());
-			if (!directorio.exists()) {
-				if (directorio.mkdirs()) {
-					System.out.println("Directorio creado");
-				} else {
-					System.out.println("Error al crear directorio");
-				}
-			}
+	        if (!directorio.exists()) {
+	            if (directorio.mkdirs()) {
+	                System.out.println("Directorio creado");
+	            } else {
+	                System.out.println("Error al crear directorio");
+	            }
+	        }
 
-			byte[] data = Base64.getMimeDecoder().decode(productImage.getImage()
-					.substring(productImage.getImage().indexOf(",") + 1, productImage.getImage().length()));
+			byte[] data = Base64.getMimeDecoder().decode(productImage.getImage().substring(productImage.getImage().indexOf(",")+1, productImage.getImage().length()));
 			try (OutputStream stream = new FileOutputStream(src + file)) {
-				stream.write(data);
+			    stream.write(data);
 			}
-
+			
 			productImage.setStatus(1);
 			productImage.setImage("product_images/" + file);
 			repo.save(productImage);
